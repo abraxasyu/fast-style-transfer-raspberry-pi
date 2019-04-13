@@ -1,26 +1,35 @@
-#import py_compile
-#py_compile.compile('evaluate.py')
-
-
 import evaluate
+import os
+import pygame
+import time
 
-evaluate.ffwd([r'C:\Users\Sean Yu\Box\Sync\Projects\Style Transfer\testset\in\gala3_512.jpg'],
-     [r'C:\Users\Sean Yu\Box\Sync\Projects\Style Transfer\testset\out\test.jpg'],
-     r'C:\Users\Sean Yu\Box\Sync\Projects\Style Transfer\fast-style-transfer\style\la_muse.ckpt', device_t='/gpu:0', batch_size=4)
+os.system('sudo service motion stop')
 
+pygame.init()
 
+screen = pygame.display.set_mode((1040, 780))
 
+styles = [r'./style/'+i+r'.ckpt' for i in ['la_muse','rain_princess','scream','udnie','wave','wreck']]
 
+inpath=r'./in/'
+outpath=r'./out/'
 
+count=0
 
-
-
-
-
-
-
-
-
+while(True):
+    realinpath = inpath+str(count)+'.jpg'
+    realoutpath = outpath+str(count)+'.jpg'
+    curtime = time.time()
+    os.system('fswebcam -r 640x480 -S 20  --no-banner --save '+realinpath)    
+    evaluate.ffwd([realinpath],
+     [realoutpath],
+     styles[count%len(styles)], device_t='/gpu:0', batch_size=4)
+    print('PROCESSING TOOK {:.1f} SECONDS'.format(time.time()-curtime))
+    image = pygame.image.load(realoutpath)
+    image = pygame.transform.scale(image, (1040, 780))
+    retarea = screen.blit(image, (0, 0))
+    pygame.display.update(retarea)
+    count+=1
 
 
 
