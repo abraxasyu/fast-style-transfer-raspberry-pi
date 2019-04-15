@@ -1,8 +1,13 @@
-See: https://github.com/lengstrom/fast-style-transfer for all details on the style transfer
+Not-so-realtime style transfer on Raspberry Pi
 
-Obviously, you will need a webcam for this. The image display is done via pygame.
+Using...
+* fswebcam for image capture (You'll need a webcam)
+* pygame for display handling
+* (lengstrom's fast-style transfer)[https://github.com/lengstrom/fast-style-transfer] for style transfer
 
-Go into the cloned local directory and type: "python process.py"
+To use...
+* clone repo
+* cd into cloned local directory and type: "python process.py"
 
 On my (raspberry pi 3)[https://www.amazon.com/gp/product/B00MQLB1N6/ref=oh_aui_search_asin_title?ie=UTF8&psc=1] B+, each frame takes ~30 seconds to process.
 
